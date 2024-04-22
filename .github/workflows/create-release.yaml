@@ -4,12 +4,14 @@ on: workflow_call
 
 jobs:
   create-release:
-    name: get version
+    name: create release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
+      - name: get version
+        id: vars
         run: |
           #!/bin/bash
           set -eux
