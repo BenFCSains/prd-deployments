@@ -9,6 +9,7 @@ permissions:
 
 name: Deploy
 jobs:
+  if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
   # test:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -28,24 +29,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        token: ${{ secrets.GH_PAT }}
       - uses: actions/setup-node@v4
       - name: Bump version
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           npm version patch
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v6
+          git push
+
+  tag-npm-release:
+    name: Tag new npm package releases
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: neverendingqs/gh-action-tag-on-npm-version@master
         with:
-          branch: version-bump
-          base: main
-      - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
-      - name: Auto merge
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: gh pr merge --auto --squash ${{ steps.cpr.outputs.pull-request-number }}
+          token: ${{ secrets.GH_PAT }}
