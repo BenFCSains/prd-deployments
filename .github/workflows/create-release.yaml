@@ -8,6 +8,7 @@ on:
 
 jobs:
   create-release:
+    environment: production
     name: create release
     runs-on: ubuntu-latest
     steps:

@@ -15,5 +15,4 @@ jobs:
   create-release:
     needs:
       - deploy
-    environment: production
     uses: ./.github/workflows/create-release.yaml
