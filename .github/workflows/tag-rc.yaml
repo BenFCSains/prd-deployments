@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - "package.json"
+
 jobs:
   tag-npm-release:
     name: Tag new npm package releases
@@ -14,4 +15,6 @@ jobs:
       - uses: neverendingqs/gh-action-tag-on-npm-version@master
         id: createTag
       - name: create release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh release create v${{ steps.createTag.outputs.tag }}
