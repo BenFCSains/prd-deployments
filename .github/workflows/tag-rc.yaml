@@ -4,12 +4,11 @@ on:
     branches:
       - main
     paths:
-      - package.json
+      - "package.json"
 jobs:
   tag-npm-release:
     name: Tag new npm package releases
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
       - uses: neverendingqs/gh-action-tag-on-npm-version@master
