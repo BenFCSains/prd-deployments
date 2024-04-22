@@ -23,7 +23,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
-          git-token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT }}
           branch: version-bump
           base: main
           labels: release
@@ -35,4 +35,4 @@ jobs:
       - name: Auto merge
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: gh pr merge --auto --squash --skip-checks ${{ steps.cpr.outputs.pull-request-number }}
+        run: gh pr merge --auto --squash ${{ steps.cpr.outputs.pull-request-number }}
