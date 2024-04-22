@@ -7,7 +7,6 @@ jobs:
     steps:
       - name: Create release
         uses: ./.github/workflows/create-release.yaml
-        secrets: inherit
       - uses: actions/checkout@v4
       - name: deploy
         run: echo "deployed"
