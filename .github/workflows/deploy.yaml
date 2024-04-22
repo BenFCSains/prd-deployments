@@ -14,23 +14,10 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'release')
     runs-on: ubuntu-latest
     steps:
-      run: echo "Running..."
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #     - name: Test
-  #       run: npm run test
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy
-  #       run: echo "Deploying..."
+      - run: echo "Running..."
   bump-version:
-    # needs:
-    #   - test
-    #   - deploy
+    needs:
+      - should-run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
