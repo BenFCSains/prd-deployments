@@ -15,6 +15,5 @@ jobs:
     environment: production
     runs-on: ubuntu-latest
     steps:
-      - name: create release
-        uses: ./.github/workflows/create-release.yaml
+      - uses: ./.github/workflows/create-release.yaml
         secrets: inherit
