@@ -33,6 +33,5 @@ jobs:
         run: |
           echo "creating release: ${{ steps.vars.outputs.tag }}"
           gh release create ${{ steps.vars.outputs.tag }} --generate-notes
-      - uses: ./.github/workflows/create-release.yaml
       - name: deploy
         run: echo "deployed"
