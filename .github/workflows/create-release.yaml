@@ -1,4 +1,4 @@
-name: Create release
+name: Create Release
 
 on:
   workflow_call:
@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
       - name: get version
         id: vars
         run: |
