@@ -1,17 +1,17 @@
 name: Tag new npm package releases
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
-      - aaaa
-    paths:
-      - "package.json"
+      - main
 
 jobs:
   tag-npm-release:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
     name: Tag new npm package releases
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: neverendingqs/gh-action-tag-on-npm-version@master
         with:
           token: ${{ secrets.GH_PAT }}
+      - uses: neverendingqs/gh-action-tag-on-npm-version@master
