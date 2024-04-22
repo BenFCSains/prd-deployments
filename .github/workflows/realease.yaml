@@ -1,0 +1,16 @@
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set output
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: create release
+        run: |
+          echo "creating release: v${{ steps.vars.outputs.tag }}"
+          gh release create v${{ steps.vars.outputs.tag }}
