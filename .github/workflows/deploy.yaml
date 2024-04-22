@@ -46,4 +46,6 @@ jobs:
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
       - name: Auto merge
+        env:
+          GH_TOKEN: ${{ GITHUB_TOKEN }}
         run: gh pr merge --auto ${{ steps.cpr.outputs.pull-request-number }}
