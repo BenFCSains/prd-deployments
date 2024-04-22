@@ -11,6 +11,9 @@ jobs:
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
   create-release:
+    environment: production
+    needs:
+      - deploy
     uses: ./.github/workflows/create-release.yaml
     secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
