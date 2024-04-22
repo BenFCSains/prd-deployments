@@ -1,0 +1,14 @@
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+name: Deploy
+jobs:
+  deploy:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'release')
+    uses: ./.github/workflows/deploy-test-envs.yaml
+  release:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
+    uses: ./.github/workflows/create-release.yaml

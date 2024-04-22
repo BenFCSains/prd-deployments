@@ -1,0 +1,32 @@
+name: Create release
+
+on: workflow_call
+
+jobs:
+  create-release:
+    name: get version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+        run: |
+          #!/bin/bash
+          set -eux
+
+          TAG="v$(cat package.json | jq -r '.version')"
+
+          git fetch --tags
+
+          if ! git tag | grep "${TAG}"; then
+            echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+          else
+            echo "'${TAG}' already exists. No action taken."
+          fi
+
+      - name: create release
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          echo "creating release: ${{ steps.vars.outputs.tag }}"
+          gh release create ${{ steps.vars.outputs.tag }}
