@@ -5,6 +5,8 @@ jobs:
     uses: ./.github/workflows/create-release.yaml
     secrets: inherit
   deploy-prd:
+    needs:
+      - create-release
     environment: production
     runs-on: ubuntu-latest
     steps:
