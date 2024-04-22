@@ -13,8 +13,8 @@ jobs:
     uses: ./.github/workflows/deploy-test-envs.yaml
     secrets: inherit
   create-release:
-    needs:
-      - deploy
+    # needs:
+    #   - deploy
     environment: production
     runs-on: ubuntu-latest
     steps:
