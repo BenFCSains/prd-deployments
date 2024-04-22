@@ -1,15 +1,13 @@
 on: workflow_call
 
 jobs:
-  create-release:
-    uses: ./.github/workflows/create-release.yaml
-    secrets: inherit
   deploy-prd:
-    needs:
-      - create-release
     environment: production
     runs-on: ubuntu-latest
     steps:
+      - name: Create release
+        uses: ./.github/workflows/create-release.yaml
+        secrets: inherit
       - uses: actions/checkout@v4
       - name: deploy
         run: echo "deployed"
