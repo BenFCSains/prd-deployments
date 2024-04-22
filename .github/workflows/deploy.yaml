@@ -1,5 +1,6 @@
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - main
 
@@ -9,37 +10,20 @@ permissions:
 
 name: Deploy
 jobs:
-<<<<<<< Updated upstream
   should-run:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'release')
     runs-on: ubuntu-latest
     steps:
       - run: echo "Running..."
-=======
->>>>>>> Stashed changes
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #     - name: Test
-  #       run: npm run test
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy
-  #       run: echo "Deploying..."
   bump-version:
-    # needs:
-    #   - test
-    #   - deploy
+    needs:
+      - should-run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - name: Bump version
         run: |
-<<<<<<< Updated upstream
           #!/bin/bash
           set -eux
 
@@ -56,22 +40,14 @@ jobs:
             echo "Tag ${TAG} already exists"
             exit 1
           fi
-=======
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          npm version patch
->>>>>>> Stashed changes
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
           branch: version-bump
           base: main
-<<<<<<< Updated upstream
           labels:
             - release
-=======
->>>>>>> Stashed changes
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
         run: |
