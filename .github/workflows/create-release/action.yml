@@ -25,10 +25,12 @@ runs:
           echo "'${TAG}' already exists. No action taken."
           exit 0
         fi
-
     - name: create release
       env:
         GH_TOKEN: ${{ github.token }}
+      shell: bash
       run: |
+        #!/bin/bash
+        set -eux
         echo "creating release: ${{ steps.vars.outputs.tag }}"
         gh release create ${{ steps.vars.outputs.tag }} --generate-notes
