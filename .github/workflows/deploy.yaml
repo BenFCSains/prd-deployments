@@ -10,6 +10,8 @@ permissions:
 
 name: Deploy
 jobs:
+  should-run:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
   # test:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -23,8 +25,8 @@ jobs:
   #     - name: Deploy
   #       run: echo "Deploying..."
   bump-version:
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
-    # needs:
+    needs:
+      - should-run
     #   - test
     #   - deploy
     runs-on: ubuntu-latest
@@ -42,7 +44,6 @@ jobs:
 
   tag-npm-release:
     needs: bump-version
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     name: Tag new npm package releases
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +65,7 @@ jobs:
             git config user.email github-actions@github.com
 
             git tag -a ${TAG} -m ${TAG}
-            git push --follow-tags
+            git push --follow-tags -f
           else
             echo "'${TAG}' already exists. No action taken."
           fi
