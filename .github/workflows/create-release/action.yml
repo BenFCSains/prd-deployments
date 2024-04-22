@@ -1,7 +1,4 @@
 name: Create Release
-branding:
-  icon: package
-  color: green
 runs:
   using: composite
   steps:
