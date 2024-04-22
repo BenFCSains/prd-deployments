@@ -1,0 +1,31 @@
+on: push
+name: Deploy
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: nr test
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploying..."
+  bump-version:
+    needs:
+      - test
+      - deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bump version
+        run: npm version patch
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+      - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+      - name: Auto merge
+        run: gh pr merge --auto ${{ steps.cpr.outputs.pull-request-number }}
