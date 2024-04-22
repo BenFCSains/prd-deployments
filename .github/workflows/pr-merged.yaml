@@ -9,10 +9,10 @@ jobs:
   deploy:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'release')
     uses: ./.github/workflows/deploy-test-envs.yaml
-    with:
+    secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
   release:
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
     uses: ./.github/workflows/create-release.yaml
-    with:
+    secrets:
       GH_PAT: ${{ secrets.GH_PAT }}
