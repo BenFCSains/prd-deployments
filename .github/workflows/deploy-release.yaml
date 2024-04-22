@@ -6,6 +6,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: get version
+        id: vars
+        run: |
+          #!/bin/bash
+          set -eux
+
+          git fetch --tags
+          TAG=$(git tag --sort=committerdate | tail -1)
+          position=1
+          delimiter=.
+          array=($(echo "$TAG" | tr $delimiter '\n'))
+          array[$position]=$((array[$position]+1))
+          TAG="${array[0]}$delimiter${array[1]}$delimiter${array[2]}"
+
+          if ! git tag | grep "${TAG}"; then
+            echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          else
+            echo "'${TAG}' already exists. No action taken."
+            exit 0
+          fi
+
+      - name: create release
+        run: |
+          echo "creating release: ${{ steps.vars.outputs.tag }}"
+          gh release create ${{ steps.vars.outputs.tag }} --generate-notes
       - uses: ./.github/workflows/create-release.yaml
       - name: deploy
         run: echo "deployed"
