@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: neverendingqs/gh-action-tag-on-npm-version@master
-        id: create-tag
+        id: createTag
       - name: create release
-        run: gh release create v${{ create-tag.outputs.tag }}
+        run: gh release create v${{ steps.createTag.outputs.tag }}
