@@ -1,0 +1,10 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy-prd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: echo "deployed"

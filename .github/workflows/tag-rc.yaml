@@ -13,8 +13,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: neverendingqs/gh-action-tag-on-npm-version@master
-        id: createTag
-      - name: create release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release create v${{ steps.createTag.outputs.tag }}
+        with:
+          token: ${{ secrets.GH_PAT }}
