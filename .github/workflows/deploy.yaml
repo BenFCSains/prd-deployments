@@ -9,7 +9,6 @@ permissions:
 
 name: Deploy
 jobs:
-  if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
   # test:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -23,6 +22,7 @@ jobs:
   #     - name: Deploy
   #       run: echo "Deploying..."
   bump-version:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     # needs:
     #   - test
     #   - deploy
