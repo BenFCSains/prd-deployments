@@ -22,7 +22,7 @@ jobs:
 
           git fetch --tags
           TAG=$(git tag --sort=committerdate | tail -1)
-
+          position=1
           delimiter=.
           array=($(echo "$TAG" | tr $delimiter '\n'))
           array[$position]=$((array[$position]+1))
