@@ -46,8 +46,7 @@ jobs:
         with:
           branch: version-bump
           base: main
-          labels:
-            - release
+          labels: release
       - name: Check outputs
         if: ${{ steps.cpr.outputs.pull-request-number }}
         run: |
