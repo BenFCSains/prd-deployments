@@ -20,14 +20,19 @@ jobs:
           #!/bin/bash
           set -eux
 
-          TAG="v$(cat package.json | jq -r '.version')"
-
           git fetch --tags
+          TAG=$(git tag --sort=committerdate | tail -1)
+
+          delimiter=.
+          array=($(echo "$TAG" | tr $delimiter '\n'))
+          array[$position]=$((array[$position]+1))
+          TAG=$(local IFS=$delimiter; echo "${array[*]}")
 
           if ! git tag | grep "${TAG}"; then
-            echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+            echo "tag=${TAG}" >> $GITHUB_OUTPUT
           else
             echo "'${TAG}' already exists. No action taken."
+            exit 0
           fi
 
       - name: create release
@@ -35,4 +40,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           echo "creating release: ${{ steps.vars.outputs.tag }}"
-          gh release create ${{ steps.vars.outputs.tag }}
+          gh release create ${{ steps.vars.outputs.tag }} --generate-notes

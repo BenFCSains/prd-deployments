@@ -13,25 +13,27 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
       - uses: actions/setup-node@v4
-      - name: Bump version
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          npm version patch
-      - name: Create Pull Request
-        id: cpr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GH_PAT }}
-          branch: version-bump
-          base: main
-          labels: release
-      - name: Check outputs
-        if: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
-      - name: Auto merge
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-        run: gh pr merge --auto --squash ${{ steps.cpr.outputs.pull-request-number }}
+      - name: deploy-dev
+        run: echo "deploy dev"
+      # - name: Bump version
+      #   run: |
+      #     git config user.name github-actions
+      #     git config user.email github-actions@github.com
+      #     npm version patch
+      # - name: Create Pull Request
+      #   id: cpr
+      #   uses: peter-evans/create-pull-request@v6
+      #   with:
+      #     token: ${{ secrets.GH_PAT }}
+      #     branch: version-bump
+      #     base: main
+      #     labels: release
+      # - name: Check outputs
+      #   if: ${{ steps.cpr.outputs.pull-request-number }}
+      #   run: |
+      #     echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+      #     echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+      # - name: Auto merge
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_PAT }}
+      #   run: gh pr merge --auto --squash ${{ steps.cpr.outputs.pull-request-number }}
