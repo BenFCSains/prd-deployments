@@ -43,6 +43,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: neverendingqs/gh-action-tag-on-npm-version@master
         with:
           token: ${{ secrets.GH_PAT }}
+      - uses: neverendingqs/gh-action-tag-on-npm-version@master
