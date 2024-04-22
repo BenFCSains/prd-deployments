@@ -1,4 +1,8 @@
-on: workflow_call
+on:
+  workflow_call:
+    secrets:
+      GH_PAT:
+        required: true
 
 name: Deploy
 jobs:
