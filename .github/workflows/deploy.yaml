@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test
-        run: nr test
+        run: npm run test
   deploy:
     runs-on: ubuntu-latest
     steps:
