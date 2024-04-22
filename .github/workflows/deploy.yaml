@@ -3,26 +3,28 @@ on:
     branches:
       - main
 
-permissions: write-all
+permissions:
+  contents: write
+  pull-requests: write
 
 name: Deploy
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      - name: Test
-        run: npm run test
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        run: echo "Deploying..."
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #     - name: Test
+  #       run: npm run test
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy
+  #       run: echo "Deploying..."
   bump-version:
-    needs:
-      - test
-      - deploy
+    # needs:
+    #   - test
+    #   - deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
