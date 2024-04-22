@@ -16,4 +16,3 @@ jobs:
     needs:
       - deploy
     uses: ./.github/workflows/deploy-release.yaml
-    secrets: inherit
