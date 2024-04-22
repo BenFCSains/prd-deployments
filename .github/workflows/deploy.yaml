@@ -47,5 +47,5 @@ jobs:
           echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
       - name: Auto merge
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: gh pr merge --auto --squash ${{ steps.cpr.outputs.pull-request-number }}
