@@ -8,7 +8,7 @@ runs:
         #!/bin/bash
         set -eux
 
-        TAG=$(date '+%Y-%m-%d-%H%M%S')
+        TAG=$(date '+%d-%m-%Y-%H%M%S')
 
         git fetch --tags
 
