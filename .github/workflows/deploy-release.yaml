@@ -1,12 +1,17 @@
 on: workflow_call
 
 jobs:
+  create-release:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        uses: ./.github/workflows/create-release
+
   deploy-prd:
     environment: production
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create Release
-        uses: ./.github/workflows/create-release
       - name: deploy
         run: echo "deployed"
