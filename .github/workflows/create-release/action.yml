@@ -8,13 +8,9 @@ runs:
         #!/bin/bash
         set -eux
 
+        TAG=$(date '+%Y-%m-%d-%H%M%S')
+
         git fetch --tags
-        TAG=$(git tag --sort=committerdate | tail -1)
-        position=1
-        delimiter=.
-        array=($(echo "$TAG" | tr $delimiter '\n'))
-        array[$position]=$((array[$position]+1))
-        TAG="${array[0]}$delimiter${array[1]}$delimiter${array[2]}"
 
         if ! git tag | grep "${TAG}"; then
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
