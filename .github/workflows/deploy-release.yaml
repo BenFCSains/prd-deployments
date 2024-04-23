@@ -10,8 +10,6 @@ jobs:
         uses: ./.github/workflows/create-release
 
   deploy-prd:
-    needs:
-      - create-release
     environment: production
     runs-on: ubuntu-latest
     steps:
